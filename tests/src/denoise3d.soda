@@ -1,0 +1,25 @@
+kernel: denoise3d
+burst width: 512
+unroll factor: 2
+iterate: 1
+
+input float: f
+input float: u(32, 32, *)
+local float: diff_u(0, 0, 0) = u(0, 0, 0) - u( 0, -1,  0)
+local float: diff_d(0, 0, 0) = u(0, 0, 0) - u( 0,  1,  0)
+local float: diff_l(0, 0, 0) = u(0, 0, 0) - u(-1,  0,  0)
+local float: diff_r(0, 0, 0) = u(0, 0, 0) - u( 1,  0,  0)
+local float: diff_i(0, 0, 0) = u(0, 0, 0) - u( 0,  0, -1)
+local float: diff_o(0, 0, 0) = u(0, 0, 0) - u( 0,  0,  1)
+local float: g(0, 0, 0) = 1.0f / sqrt(0.00005f+
+    diff_u(0, 0, 0)*diff_u(0, 0, 0)+
+    diff_d(0, 0, 0)*diff_d(0, 0, 0)+
+    diff_l(0, 0, 0)*diff_l(0, 0, 0)+
+    diff_r(0, 0, 0)*diff_r(0, 0, 0)+
+    diff_i(0, 0, 0)*diff_i(0, 0, 0)+
+    diff_o(0, 0, 0)*diff_o(0, 0, 0))
+local float: r0(0, 0, 0) = u(0, 0, 0) * f(0, 0, 0) * (1.0f/0.03f)
+local float:
+    r1(0, 0, 0) = (r0(0, 0, 0) * (2.38944f + r0(0, 0, 0) * (0.950037f + r0(0, 0, 0)))) / (4.65314f + r0(0, 0, 0) * (2.57541f + r0(0, 0, 0) * (1.48937f + r0(0, 0, 0))))
+output float:
+    output(0, 0, 0) = (u(0, 0, 0) + 5.0f * (u(1, 0, 0) * g(1, 0, 0) + u(-1, 0, 0) * g(-1, 0, 0) + u(0, 1, 0) * g(0, 1, 0) + u(0, -1, 0) * g(0, -1, 0) + u(0, 0, 1) * g(0, 0, 1) + u(0, 0, -1) * g(0, 0, -1) + (1.0f/0.03f) * f(0, 0, 0)*r1(0, 0, 0)) ) / (1.0f + 5.0f*(g(1, 0, 0) + g(-1, 0, 0) + g(0, 1, 0) + g(0, -1, 0) + g(0, 0, 1) + g(0, 0, -1) + (1.0f/0.03f)))

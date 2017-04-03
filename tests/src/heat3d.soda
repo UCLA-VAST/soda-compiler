@@ -1,0 +1,10 @@
+kernel: heat3d
+burst width: 512
+unroll factor: 2
+input float: in(32, 32, *)
+output float: out(0, 0, 0) = 
+    .125f * (in(1, 0, 0) - 2.f * in(0, 0, 0) + in(-1,  0,  0)) + 
+    .125f * (in(0, 1, 0) - 2.f * in(0, 0, 0) + in( 0, -1,  0)) + 
+    .125f * (in(0, 0, 1) - 2.f * in(0, 0, 0) + in( 0,  0, -1)) + 
+    in(0, 0, 0)
+iterate: 2
