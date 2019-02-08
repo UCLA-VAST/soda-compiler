@@ -33,13 +33,28 @@ Stencil with Optimized Dataflow Architecture Compiler
 
 ### Prerequisites
 
-+ Python 3.3+
-+ Python dependencies installed via `python3 -m pip install -r requirements.txt`
++ Python 3.5+ and corresponding `pip`
 + SDAccel 2018.3 (earlier versions might work but won't be supported)
+
+<details><summary>How to install Python 3.5+ on Ubuntu 16.04+ and CentOS 7?</summary>
+  
+#### Ubuntu 16.04+
+```bash
+sudo apt install python3 python3-pip
+```
+
+#### CentOS 7
+```bash
+sudo yum install python36 python36-pip
+sudo alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 100
+```
+
+</details>
 
 ### Clone the Repo
     git clone https://github.com/UCLA-VAST/soda-compiler.git
     cd soda-compiler
+    python3 -m pip install --user -r requirements.txt
 
 ### Parameter Setup
     app=blur
