@@ -1,3 +1,5 @@
+This repo is archived. For latest version, please see https://github.com/UCLA-VAST/soda.
+
 # SODA Compiler
 Stencil with Optimized Dataflow Architecture Compiler
 
